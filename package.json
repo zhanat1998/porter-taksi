@@ -1,0 +1,16 @@
+{
+  "name": "porter-taxi",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:studio\" \"npm run dev:frontend\"",
+    "dev:studio": "cd studio && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "npm run build:studio && npm run build:frontend",
+    "build:studio": "cd studio && npm run build",
+    "build:frontend": "cd frontend && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
