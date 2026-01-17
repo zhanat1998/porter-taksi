@@ -9,7 +9,7 @@ type Props = {
 }
 
 async function getCleaningVideo() {
-  return client.fetch(VIDEO_BY_CATEGORY_QUERY, { category: 'cleaning' })
+  return client.fetch(VIDEO_BY_CATEGORY_QUERY, { category: 'page-cleaning' })
 }
 
 export default async function CleaningPage({ params }: Props) {
@@ -55,66 +55,6 @@ function CleaningContent({ video }: { video: VideoData }) {
 
   return (
     <main className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-green-600 to-green-800 text-white py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <Link href="/" className="inline-flex items-center text-green-200 hover:text-white mb-4 transition">
-                ← {t('common.backHome')}
-              </Link>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                {t('cleaningPage.title')}
-              </h1>
-              <p className="text-xl mb-8 text-green-100">
-                {t('cleaningPage.subtitle')}
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <a
-                  href="tel:+996555123456"
-                  className="bg-white text-green-700 px-8 py-4 rounded-lg text-xl font-bold hover:bg-green-50 transition text-center"
-                >
-                  📞 {t('common.call')}
-                </a>
-                <a
-                  href="https://wa.me/996555123456"
-                  className="bg-green-500 text-white px-8 py-4 rounded-lg text-xl font-bold hover:bg-green-400 transition text-center border-2 border-green-400"
-                >
-                  💬 {t('common.whatsapp')}
-                </a>
-              </div>
-
-              <div className="flex flex-wrap gap-3 text-sm">
-                <span className="bg-green-700/50 px-4 py-2 rounded-full">⏰ 24/7</span>
-                <span className="bg-green-700/50 px-4 py-2 rounded-full">✨ {t('cleaningPage.professional')}</span>
-                <span className="bg-green-700/50 px-4 py-2 rounded-full">🧴 {t('cleaningPage.ecoFriendly')}</span>
-              </div>
-            </div>
-
-            {/* Video */}
-            <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl bg-green-700/30">
-              {video?.videoUrl ? (
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  poster={video.posterUrl}
-                  className="w-full h-full object-cover"
-                >
-                  <source src={video.videoUrl} type="video/mp4" />
-                </video>
-              ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <span className="text-8xl">🧹</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Services */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -208,31 +148,6 @@ function CleaningContent({ video }: { video: VideoData }) {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 bg-green-600 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            {t('cleaningPage.cta.title')}
-          </h2>
-          <p className="text-xl mb-8 text-green-100 max-w-2xl mx-auto">
-            {t('cleaningPage.cta.subtitle')}
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a
-              href="tel:+996555123456"
-              className="bg-white text-green-700 px-8 py-4 rounded-lg text-xl font-bold hover:bg-green-50 transition inline-flex items-center justify-center gap-2"
-            >
-              📞 +996 555 123 456
-            </a>
-            <a
-              href="https://wa.me/996555123456"
-              className="border-2 border-white text-white px-8 py-4 rounded-lg text-xl font-bold hover:bg-green-500 transition inline-flex items-center justify-center gap-2"
-            >
-              💬 {t('common.whatsapp')}
-            </a>
-          </div>
-        </div>
-      </section>
     </main>
   )
 }

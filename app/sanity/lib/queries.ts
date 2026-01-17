@@ -146,3 +146,12 @@ export const VIDEOS_BY_CATEGORY_QUERY = `*[_type == "video" && category == $cate
   "videoUrl": videoFile.asset->url,
   "posterUrl": poster.asset->url
 }`
+
+// Бардык активдүү видеолор (башкы бет үчүн)
+export const ALL_ACTIVE_VIDEOS_QUERY = `*[_type == "video" && isActive == true] {
+  _id,
+  title,
+  category,
+  "videoUrl": videoFile.asset->url,
+  "posterUrl": poster.asset->url
+}`
