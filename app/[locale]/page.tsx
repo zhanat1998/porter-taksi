@@ -62,31 +62,34 @@ function HomeContent({ videos }: { videos: VideoData[] }) {
           {videos && videos.length > 0 && (
             <div className="lg:hidden mb-8">
               <div className="flex gap-3 justify-center">
-                {videos.slice(0, 2).map((video, index) => (
-                  <div key={video._id} className="flex flex-col items-center">
-                    <span className="text-sm font-semibold mb-2 text-green-100">
-                      {index === 0 ? t('home.videos.garbage') : t('home.videos.cleaning')}
-                    </span>
-                    <div className="aspect-video h-[120px] rounded-xl overflow-hidden shadow-xl bg-green-700/30">
-                      {video.videoUrl ? (
-                        <video
-                          autoPlay
-                          muted
-                          loop
-                          playsInline
-                          poster={video.posterUrl}
-                          className="w-full h-full object-cover"
-                        >
-                          <source src={video.videoUrl} type="video/mp4" />
-                        </video>
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <span className="text-4xl">🚚</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                {videos.slice(0, 2).map((video, index) => {
+                  const href = index === 0 ? '/services/garbage' : '/services/cleaning'
+                  return (
+                    <Link key={video._id} href={href} className="flex flex-col items-center group cursor-pointer">
+                      <span className="text-sm font-semibold mb-2 text-green-100 group-hover:text-white transition">
+                        {index === 0 ? t('home.videos.garbage') : t('home.videos.cleaning')}
+                      </span>
+                      <div className="aspect-video h-[120px] rounded-xl overflow-hidden shadow-xl bg-green-700/30 group-hover:ring-4 group-hover:ring-white/50 transition">
+                        {video.videoUrl ? (
+                          <video
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            poster={video.posterUrl}
+                            className="w-full h-full object-cover"
+                          >
+                            <source src={video.videoUrl} type="video/mp4" />
+                          </video>
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <span className="text-4xl">🚚</span>
+                          </div>
+                        )}
+                      </div>
+                    </Link>
+                  )
+                })}
               </div>
             </div>
           )}
@@ -128,31 +131,34 @@ function HomeContent({ videos }: { videos: VideoData[] }) {
             <div className="hidden lg:block">
               <div className="flex gap-4">
                 {videos && videos.length > 0 ? (
-                  videos.slice(0, 2).map((video, index) => (
-                    <div key={video._id} className="flex-1 flex flex-col items-center">
-                      <span className="text-base font-semibold mb-2 text-green-100">
-                        {index === 0 ? t('home.videos.garbage') : t('home.videos.cleaning')}
-                      </span>
-                      <div className="w-full aspect-video max-h-[180px] rounded-xl overflow-hidden shadow-xl bg-green-700/30">
-                        {video.videoUrl ? (
-                          <video
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                            poster={video.posterUrl}
-                            className="w-full h-full object-cover"
-                          >
-                            <source src={video.videoUrl} type="video/mp4" />
-                          </video>
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <span className="text-5xl">🚚</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))
+                  videos.slice(0, 2).map((video, index) => {
+                    const href = index === 0 ? '/services/garbage' : '/services/cleaning'
+                    return (
+                      <Link key={video._id} href={href} className="flex-1 flex flex-col items-center group cursor-pointer">
+                        <span className="text-base font-semibold mb-2 text-green-100 group-hover:text-white transition">
+                          {index === 0 ? t('home.videos.garbage') : t('home.videos.cleaning')}
+                        </span>
+                        <div className="w-full aspect-video max-h-[180px] rounded-xl overflow-hidden shadow-xl bg-green-700/30 group-hover:ring-4 group-hover:ring-white/50 transition">
+                          {video.videoUrl ? (
+                            <video
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              poster={video.posterUrl}
+                              className="w-full h-full object-cover"
+                            >
+                              <source src={video.videoUrl} type="video/mp4" />
+                            </video>
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <span className="text-5xl">🚚</span>
+                            </div>
+                          )}
+                        </div>
+                      </Link>
+                    )
+                  })
                 ) : (
                   <div className="flex-1 aspect-video max-h-[200px] rounded-xl overflow-hidden shadow-xl bg-green-700/30 flex items-center justify-center">
                     <span className="text-7xl">🚚</span>
