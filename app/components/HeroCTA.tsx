@@ -2,10 +2,14 @@
 
 import { useTranslations } from 'next-intl'
 import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 export default function HeroCTA() {
   const t = useTranslations()
   const pathname = usePathname()
+
+  // Башкы бет экенин текшерүү
+  const isHomePage = pathname === '/kg' || pathname === '/ru' || pathname === '/'
 
   // Барак боюнча заголовок аныктоо
   const getTitle = () => {
@@ -32,12 +36,22 @@ export default function HeroCTA() {
           >
             <span>📞</span> +996 555 123 456
           </a>
-          <a
-            href="https://wa.me/996555123456"
-            className="bg-green-500 text-white px-6 py-4 rounded-xl text-lg font-bold hover:bg-green-400 transition inline-flex items-center justify-center gap-2 border-2 border-green-400"
-          >
-            <span>💬</span> WhatsApp
-          </a>
+
+          {isHomePage ? (
+            <a
+              href="https://wa.me/996555123456"
+              className="bg-green-500 text-white px-6 py-4 rounded-xl text-lg font-bold hover:bg-green-400 transition inline-flex items-center justify-center gap-2 border-2 border-green-400"
+            >
+              <span>💬</span> WhatsApp
+            </a>
+          ) : (
+            <Link
+              href="/apply"
+              className="bg-orange-500 text-white px-6 py-4 rounded-xl text-lg font-bold hover:bg-orange-400 transition inline-flex items-center justify-center gap-2 border-2 border-orange-400"
+            >
+              <span>👷</span> {t('common.wantToWork')}
+            </Link>
+          )}
         </div>
       </div>
     </section>

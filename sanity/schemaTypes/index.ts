@@ -7,6 +7,7 @@ import { faq } from './documents/faq'
 import { page } from './documents/page'
 import { siteSettings } from './documents/siteSettings'
 import { video } from './documents/video'
+import { worker } from './documents/worker'
 
 // Objects
 import { seo } from './objects/seo'
@@ -33,6 +34,7 @@ export const schemaTypes = [
   page,
   siteSettings,
   video,
+  worker,
 
   // Objects
   seo,

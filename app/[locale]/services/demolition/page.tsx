@@ -1,19 +1,27 @@
 import { useTranslations } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
-import Link from 'next/link'
+import { client } from '@/app/sanity/lib/client'
+import { WORKERS_BY_SERVICE_QUERY } from '@/app/sanity/lib/queries'
+import WorkerCard, { Worker } from '@/app/components/WorkerCard'
 
 type Props = {
   params: Promise<{ locale: string }>
+}
+
+async function getWorkers(): Promise<Worker[]> {
+  return client.fetch(WORKERS_BY_SERVICE_QUERY, { serviceType: 'demolition' })
 }
 
 export default async function DemolitionPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
 
-  return <DemolitionContent />
+  const workers = await getWorkers()
+
+  return <DemolitionContent workers={workers} />
 }
 
-function DemolitionContent() {
+function DemolitionContent({ workers }: { workers: Worker[] }) {
   const t = useTranslations()
 
   const services = [
@@ -32,6 +40,31 @@ function DemolitionContent() {
 
   return (
     <main className="min-h-screen">
+      {/* Workers List */}
+      <section className="py-8 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-xl font-bold text-gray-800">
+              Демонтаж кызматы - Бишкек {workers.length > 0 && `(${workers.length} жумушчу)`}
+            </h1>
+          </div>
+
+          {workers.length > 0 ? (
+            <div className="space-y-4 max-w-4xl">
+              {workers.map((worker) => (
+                <WorkerCard key={worker._id} worker={worker} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">
+                Жумушчулар жакында кошулат...
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* Services */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">

@@ -155,3 +155,36 @@ export const ALL_ACTIVE_VIDEOS_QUERY = `*[_type == "video" && isActive == true] 
   "videoUrl": videoFile.asset->url,
   "posterUrl": poster.asset->url
 }`
+
+// Жумушчулар (категория боюнча)
+export const WORKERS_BY_SERVICE_QUERY = `*[_type == "worker" && isActive == true && serviceType == $serviceType] | order(_createdAt desc) {
+  _id,
+  name,
+  "photoUrl": photo.asset->url,
+  location,
+  experience,
+  vehicle,
+  priceMin,
+  priceMax,
+  description,
+  phone,
+  whatsapp,
+  verified
+}`
+
+// Бардык активдүү жумушчулар
+export const ALL_WORKERS_QUERY = `*[_type == "worker" && isActive == true] | order(_createdAt desc) {
+  _id,
+  name,
+  "photoUrl": photo.asset->url,
+  location,
+  experience,
+  vehicle,
+  priceMin,
+  priceMax,
+  description,
+  phone,
+  whatsapp,
+  verified,
+  serviceType
+}`
