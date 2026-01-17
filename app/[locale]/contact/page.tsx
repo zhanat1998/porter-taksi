@@ -1,57 +1,79 @@
-import { Metadata } from 'next'
+import { useTranslations } from 'next-intl'
+import { setRequestLocale } from 'next-intl/server'
 
-export const metadata: Metadata = {
-  title: 'Байланыш | Porter Taxi Бишкек',
-  description: 'Porter Taxi менен байланыш. Телефон, WhatsApp, Telegram. 24/7 иштейбиз!',
+type Props = {
+  params: Promise<{ locale: string }>
 }
 
-const contacts = [
-  {
-    icon: '📞',
-    title: 'Телефон',
-    items: ['+996 555 123 456', '+996 700 123 456'],
-    action: 'tel:+996555123456',
-    actionText: 'Чалуу',
-    color: 'bg-blue-500',
-  },
-  {
-    icon: '💬',
-    title: 'WhatsApp',
-    items: ['+996 555 123 456'],
-    action: 'https://wa.me/996555123456',
-    actionText: 'Жазуу',
-    color: 'bg-green-500',
-  },
-  {
-    icon: '✈️',
-    title: 'Telegram',
-    items: ['@portertaxi'],
-    action: 'https://t.me/portertaxi',
-    actionText: 'Жазуу',
-    color: 'bg-sky-500',
-  },
-]
+export async function generateMetadata({ params }: Props) {
+  const { locale } = await params
+  return {
+    title: locale === 'kg' ? 'Байланыш | Porter Taxi Бишкек' : 'Контакты | Porter Taxi Бишкек',
+    description: locale === 'kg'
+      ? 'Porter Taxi менен байланыш. Телефон, WhatsApp, Telegram. 24/7 иштейбиз!'
+      : 'Связаться с Porter Taxi. Телефон, WhatsApp, Telegram. Работаем 24/7!'
+  }
+}
 
-const workingAreas = [
-  'Бишкек шаары',
-  'Чүй областы',
-  'Токмок',
-  'Кант',
-  'Сокулук',
-  'Беловодское',
-  'Кара-Балта',
-  'Шопоков',
-]
+export default async function ContactPage({ params }: Props) {
+  const { locale } = await params
+  setRequestLocale(locale)
+  return <ContactContent />
+}
 
-export default function ContactPage() {
+function ContactContent() {
+  const t = useTranslations()
+
+  const contacts = [
+    {
+      icon: '📞',
+      key: 'phone',
+      items: ['+996 555 123 456', '+996 700 123 456'],
+      action: 'tel:+996555123456',
+      color: 'bg-blue-500',
+    },
+    {
+      icon: '💬',
+      key: 'whatsapp',
+      items: ['+996 555 123 456'],
+      action: 'https://wa.me/996555123456',
+      color: 'bg-green-500',
+    },
+    {
+      icon: '✈️',
+      key: 'telegram',
+      items: ['@portertaxi'],
+      action: 'https://t.me/portertaxi',
+      color: 'bg-sky-500',
+    },
+  ]
+
+  const workingAreas = [
+    'contact.areas.bishkek',
+    'contact.areas.chui',
+    'contact.areas.tokmok',
+    'contact.areas.kant',
+    'contact.areas.sokuluk',
+    'contact.areas.belovodskoe',
+    'contact.areas.karabalta',
+    'contact.areas.shopokov',
+  ]
+
+  const faqs = [
+    { key: 'time' },
+    { key: 'payment' },
+    { key: 'loaders' },
+    { key: 'night' },
+  ]
+
   return (
     <main className="min-h-screen">
       {/* Hero */}
       <section className="bg-gradient-to-br from-green-600 to-green-800 text-white py-16">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Байланыш</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{t('contact.title')}</h1>
           <p className="text-xl text-green-100 max-w-2xl">
-            Биз менен каалаган убакта байланышыңыз. 24/7 иштейбиз!
+            {t('contact.subtitle')}
           </p>
         </div>
       </section>
@@ -65,7 +87,7 @@ export default function ContactPage() {
                 <div className={`w-20 h-20 ${contact.color} rounded-full flex items-center justify-center text-4xl mx-auto mb-6`}>
                   {contact.icon}
                 </div>
-                <h2 className="text-xl font-bold mb-4">{contact.title}</h2>
+                <h2 className="text-xl font-bold mb-4">{t(`contact.methods.${contact.key}.title`)}</h2>
                 <div className="space-y-1 mb-6">
                   {contact.items.map((item, j) => (
                     <p key={j} className="text-gray-600 text-lg">{item}</p>
@@ -75,7 +97,7 @@ export default function ContactPage() {
                   href={contact.action}
                   className={`inline-block ${contact.color} text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition`}
                 >
-                  {contact.actionText}
+                  {t(`contact.methods.${contact.key}.action`)}
                 </a>
               </div>
             ))}
@@ -91,25 +113,25 @@ export default function ContactPage() {
               {/* Hours */}
               <div className="bg-white rounded-2xl shadow-lg p-8">
                 <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                  <span className="text-3xl">🕐</span> Иш убактысы
+                  <span className="text-3xl">🕐</span> {t('contact.hours.title')}
                 </h2>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center py-3 border-b">
-                    <span className="text-gray-600">Дүйшөмбү - Жума</span>
-                    <span className="font-bold text-green-600">24 саат</span>
+                    <span className="text-gray-600">{t('contact.hours.weekdays')}</span>
+                    <span className="font-bold text-green-600">{t('contact.hours.allDay')}</span>
                   </div>
                   <div className="flex justify-between items-center py-3 border-b">
-                    <span className="text-gray-600">Ишемби</span>
-                    <span className="font-bold text-green-600">24 саат</span>
+                    <span className="text-gray-600">{t('contact.hours.saturday')}</span>
+                    <span className="font-bold text-green-600">{t('contact.hours.allDay')}</span>
                   </div>
                   <div className="flex justify-between items-center py-3">
-                    <span className="text-gray-600">Жекшемби</span>
-                    <span className="font-bold text-green-600">24 саат</span>
+                    <span className="text-gray-600">{t('contact.hours.sunday')}</span>
+                    <span className="font-bold text-green-600">{t('contact.hours.allDay')}</span>
                   </div>
                 </div>
                 <div className="mt-6 bg-green-50 p-4 rounded-lg">
                   <p className="text-green-700 font-medium text-center">
-                    🌙 Түнкү убакта да иштейбиз!
+                    🌙 {t('contact.hours.night')}
                   </p>
                 </div>
               </div>
@@ -117,22 +139,22 @@ export default function ContactPage() {
               {/* Address */}
               <div className="bg-white rounded-2xl shadow-lg p-8">
                 <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                  <span className="text-3xl">📍</span> Дарек
+                  <span className="text-3xl">📍</span> {t('contact.address.title')}
                 </h2>
                 <div className="space-y-4">
                   <p className="text-gray-600">
-                    <strong className="text-gray-900">Шаар:</strong> Бишкек
+                    <strong className="text-gray-900">{t('contact.address.city')}:</strong> {t('common.bishkek')}
                   </p>
                   <p className="text-gray-600">
-                    <strong className="text-gray-900">Өлкө:</strong> Кыргызстан
+                    <strong className="text-gray-900">{t('contact.address.country')}:</strong> {t('contact.address.kyrgyzstan')}
                   </p>
                   <p className="text-gray-600">
-                    <strong className="text-gray-900">Кызмат аймагы:</strong> Бишкек жана Чүй областы
+                    <strong className="text-gray-900">{t('contact.address.serviceArea')}:</strong> {t('contact.address.serviceAreaDesc')}
                   </p>
                 </div>
                 <div className="mt-6 bg-yellow-50 p-4 rounded-lg">
                   <p className="text-yellow-700 text-sm">
-                    ⚠️ Шаар сыртына чыгууда км боюнча кошумча төлөм
+                    ⚠️ {t('contact.address.outsideNote')}
                   </p>
                 </div>
               </div>
@@ -144,19 +166,19 @@ export default function ContactPage() {
       {/* Working Areas */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">Кызмат көрсөтүү аймактары</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{t('contact.areasTitle')}</h2>
           <div className="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
-            {workingAreas.map((area, i) => (
+            {workingAreas.map((areaKey, i) => (
               <span
                 key={i}
                 className="bg-green-100 text-green-700 px-6 py-3 rounded-full font-medium"
               >
-                📍 {area}
+                📍 {t(areaKey)}
               </span>
             ))}
           </div>
           <p className="text-center text-gray-500 mt-6">
-            Башка жерлерге да баргыбыз келеби? Чалыңыз - сүйлөшөбүз!
+            {t('contact.areasNote')}
           </p>
         </div>
       </section>
@@ -164,16 +186,16 @@ export default function ContactPage() {
       {/* Quick Contact */}
       <section className="py-16 bg-green-600 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Азыр заказ бериңиз!</h2>
+          <h2 className="text-3xl font-bold mb-4">{t('contact.orderNow')}</h2>
           <p className="text-green-100 mb-8 max-w-xl mx-auto">
-            Бекер консультация. Баа айтабыз жана ылайыктуу убакытты белгилейбиз.
+            {t('contact.orderNowDesc')}
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a
               href="tel:+996555123456"
               className="bg-white text-green-700 px-8 py-4 rounded-lg text-xl font-bold hover:bg-green-50 transition inline-flex items-center justify-center gap-2"
             >
-              <span>📞</span> Чалуу
+              <span>📞</span> {t('common.call')}
             </a>
             <a
               href="https://wa.me/996555123456"
@@ -194,24 +216,14 @@ export default function ContactPage() {
       {/* FAQ */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">Көп берилүүчү суроолор</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{t('contact.faq.title')}</h2>
           <div className="max-w-2xl mx-auto space-y-4">
-            <details className="bg-white rounded-lg shadow-sm p-6 cursor-pointer">
-              <summary className="font-bold">Канча убакытта келесиздер?</summary>
-              <p className="mt-4 text-gray-600">Адатта 30-60 мүнөт ичинде келебиз. Шаардын четине 1 саатка чейин кетиши мүмкүн.</p>
-            </details>
-            <details className="bg-white rounded-lg shadow-sm p-6 cursor-pointer">
-              <summary className="font-bold">Төлөө кантип болот?</summary>
-              <p className="mt-4 text-gray-600">Накталай төлөй аласыз. Элсом, MBank, О! деньги да кабыл алабыз.</p>
-            </details>
-            <details className="bg-white rounded-lg shadow-sm p-6 cursor-pointer">
-              <summary className="font-bold">Грузчиктер барбы?</summary>
-              <p className="mt-4 text-gray-600">Ооба, бизде тажрыйбалуу грузчиктер бар. Өзүнчө заказ кылсаңыз да болот.</p>
-            </details>
-            <details className="bg-white rounded-lg shadow-sm p-6 cursor-pointer">
-              <summary className="font-bold">Түнкү убакта иштейсиздерби?</summary>
-              <p className="mt-4 text-gray-600">Ооба, биз 24/7 иштейбиз. Түнкү убакта (22:00-08:00) 20% кошумча акы.</p>
-            </details>
+            {faqs.map((faq, i) => (
+              <details key={i} className="bg-white rounded-lg shadow-sm p-6 cursor-pointer">
+                <summary className="font-bold">{t(`contact.faq.${faq.key}.q`)}</summary>
+                <p className="mt-4 text-gray-600">{t(`contact.faq.${faq.key}.a`)}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>
