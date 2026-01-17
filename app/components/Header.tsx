@@ -5,11 +5,11 @@ import Link from 'next/link'
 
 const navigation = [
   { name: 'Башкы бет', href: '/' },
-  { name: 'Кызматтар', href: '#services' },
-  { name: 'Баалар', href: '#pricing' },
-  { name: 'Унаалар', href: '#vehicles' },
-  { name: 'Биз жөнүндө', href: '#about' },
-  { name: 'Байланыш', href: '#contact' },
+  { name: 'Кызматтар', href: '/services' },
+  { name: 'Баалар', href: '/pricing' },
+  { name: 'Унаалар', href: '/vehicles' },
+  { name: 'Биз жөнүндө', href: '/about' },
+  { name: 'Байланыш', href: '/contact' },
 ]
 
 export default function Header() {
