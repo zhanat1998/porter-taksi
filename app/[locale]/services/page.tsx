@@ -8,10 +8,10 @@ type Props = {
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params
   return {
-    title: locale === 'kg' ? 'Кызматтар | Porter Taxi Бишкек' : 'Услуги | Porter Taxi Бишкек',
+    title: locale === 'kg' ? 'Кызматтар | Жардамчы Бишкек' : 'Услуги | Жардамчы Бишкек',
     description: locale === 'kg'
-      ? 'Мусор чыгаруу, жүк ташуу, көчүрүү, грузчик кызматтары Бишкекте.'
-      : 'Вывоз мусора, грузоперевозки, переезд, услуги грузчиков в Бишкеке.'
+      ? 'Портер кызматы жана клининг. Мусор чыгаруу, жүк ташуу, көчүрүү, үй тазалоо Бишкекте.'
+      : 'Услуги портера и клининга. Вывоз мусора, грузоперевозки, переезд, уборка квартир в Бишкеке.'
   }
 }
 
@@ -24,11 +24,19 @@ export default async function ServicesPage({ params }: Props) {
 function ServicesContent() {
   const t = useTranslations()
 
-  const services = [
+  const porterServices = [
     { key: 'garbageRemoval', icon: '🗑️', price: '1500' },
     { key: 'cargoTransport', icon: '🚚', price: '800' },
     { key: 'moving', icon: '📦', price: '2000' },
     { key: 'loaders', icon: '💪', price: '500' },
+  ]
+
+  const cleaningServices = [
+    { key: 'homeCleaning', icon: '🏠', price: '1500' },
+    { key: 'officeCleaning', icon: '🏢', price: '2000' },
+    { key: 'afterRepair', icon: '🧹', price: '3000' },
+    { key: 'windowCleaning', icon: '🪟', price: '200' },
+    { key: 'furnitureCleaning', icon: '🛋️', price: '800' },
   ]
 
   return (
@@ -43,21 +51,67 @@ function ServicesContent() {
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-16">
+      {/* Porter Services */}
+      <section id="porter" className="py-16">
         <div className="container mx-auto px-4">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-5xl">🚚</span>
+            <div>
+              <h2 className="text-3xl font-bold text-blue-600">{t('services.porterTitle')}</h2>
+              <p className="text-gray-600">{t('home.porter.desc')}</p>
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-8">
-            {services.map((service) => (
+            {porterServices.map((service) => (
+              <div
+                key={service.key}
+                className="bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-xl transition hover:border-blue-500"
+              >
+                <div className="text-6xl mb-4">{service.icon}</div>
+                <h3 className="text-2xl font-bold mb-2">{t(`services.${service.key}.title`)}</h3>
+                <p className="text-gray-600 mb-4">{t(`services.${service.key}.desc`)}</p>
+
+                <div className="mb-6">
+                  <span className="text-blue-600 font-bold text-3xl">{t('common.from')} {service.price}</span>
+                  <span className="text-gray-500"> {t('common.som')}</span>
+                </div>
+
+                <a
+                  href="tel:+996555123456"
+                  className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-medium hover:bg-blue-700 transition"
+                >
+                  {t('common.order')}
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Cleaning Services */}
+      <section id="cleaning" className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-5xl">🧹</span>
+            <div>
+              <h2 className="text-3xl font-bold text-green-600">{t('services.cleaningTitle')}</h2>
+              <p className="text-gray-600">{t('home.cleaning.desc')}</p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {cleaningServices.map((service) => (
               <div
                 key={service.key}
                 className="bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-xl transition hover:border-green-500"
               >
                 <div className="text-6xl mb-4">{service.icon}</div>
-                <h2 className="text-2xl font-bold mb-2">{t(`services.${service.key}.title`)}</h2>
+                <h3 className="text-2xl font-bold mb-2">{t(`services.${service.key}.title`)}</h3>
                 <p className="text-gray-600 mb-4">{t(`services.${service.key}.desc`)}</p>
 
                 <div className="mb-6">
-                  <span className="text-green-600 font-bold text-3xl">{service.price}</span>
+                  <span className="text-green-600 font-bold text-3xl">{t('common.from')} {service.price}</span>
                   <span className="text-gray-500"> {t('common.som')}</span>
                 </div>
 

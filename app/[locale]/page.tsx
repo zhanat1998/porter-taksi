@@ -16,17 +16,26 @@ export default async function Home({ params }: Props) {
 function HomeContent() {
   const t = useTranslations()
 
-  const services = [
+  const porterServices = [
     { key: 'garbageRemoval', icon: '🗑️', price: '1500' },
     { key: 'cargoTransport', icon: '🚚', price: '800' },
     { key: 'moving', icon: '📦', price: '2000' },
     { key: 'loaders', icon: '💪', price: '500' },
   ]
 
-  const vehicles = [
-    { name: 'Портер', capacity: '1.5 т', price: '800', icon: '🚛' },
-    { name: 'Газель', capacity: '2 т', price: '1000', icon: '🚚' },
-    { name: 'Самосвал', capacity: '5 т', price: '2500', icon: '🚜' },
+  const cleaningServices = [
+    { key: 'homeCleaning', icon: '🏠', price: '1500' },
+    { key: 'officeCleaning', icon: '🏢', price: '2000' },
+    { key: 'afterRepair', icon: '🧹', price: '3000' },
+    { key: 'windowCleaning', icon: '🪟', price: '200' },
+    { key: 'furnitureCleaning', icon: '🛋️', price: '800' },
+  ]
+
+  const whyUs = [
+    { icon: '⚡', key: 'fast' },
+    { icon: '✅', key: 'reliable' },
+    { icon: '💰', key: 'affordable' },
+    { icon: '🏆', key: 'quality' },
   ]
 
   return (
@@ -34,18 +43,15 @@ function HomeContent() {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-green-600 to-green-800 text-white">
         <div className="container mx-auto px-4 py-16 md:py-24">
-          <div className="max-w-3xl">
+          <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Porter Taxi - {t('common.bishkek')}
-            </h1>
-            <p className="text-xl md:text-2xl mb-4 text-green-100">
               {t('home.hero.title')}
-            </p>
-            <p className="text-lg mb-8 text-green-100">
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 text-green-100">
               {t('home.hero.subtitle')}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
               <a
                 href="tel:+996555123456"
                 className="bg-white text-green-700 px-8 py-4 rounded-lg text-xl font-bold hover:bg-green-50 transition text-center"
@@ -60,17 +66,102 @@ function HomeContent() {
               </a>
             </div>
 
-            <div className="flex flex-wrap gap-3 text-sm">
+            <div className="flex flex-wrap justify-center gap-3 text-sm">
               <span className="bg-green-700/50 px-4 py-2 rounded-full">⏰ 24/7</span>
               <span className="bg-green-700/50 px-4 py-2 rounded-full">⚡ {t('home.whyUs.fast')}</span>
               <span className="bg-green-700/50 px-4 py-2 rounded-full">💰 {t('home.whyUs.affordable')}</span>
+              <span className="bg-green-700/50 px-4 py-2 rounded-full">🏆 {t('home.whyUs.quality')}</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Service Categories */}
       <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+            {t('home.categories.title')}
+          </h2>
+          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+            {t('home.categories.subtitle')}
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Porter Services Card */}
+            <div className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition group">
+              <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white">
+                <div className="text-6xl mb-4">🚚</div>
+                <h3 className="text-2xl font-bold mb-2">{t('home.porter.title')}</h3>
+                <p className="text-blue-100">{t('home.porter.desc')}</p>
+              </div>
+              <div className="p-6">
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <span className="text-2xl">🗑️</span>
+                    <p className="text-sm mt-1">{t('services.garbageRemoval.title')}</p>
+                  </div>
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <span className="text-2xl">📦</span>
+                    <p className="text-sm mt-1">{t('services.moving.title')}</p>
+                  </div>
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <span className="text-2xl">🚚</span>
+                    <p className="text-sm mt-1">{t('services.cargoTransport.title')}</p>
+                  </div>
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <span className="text-2xl">💪</span>
+                    <p className="text-sm mt-1">{t('services.loaders.title')}</p>
+                  </div>
+                </div>
+                <Link
+                  href="/services#porter"
+                  className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-medium hover:bg-blue-700 transition"
+                >
+                  {t('home.porter.btn')} →
+                </Link>
+              </div>
+            </div>
+
+            {/* Cleaning Services Card */}
+            <div className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition group">
+              <div className="bg-gradient-to-r from-green-500 to-green-600 p-6 text-white">
+                <div className="text-6xl mb-4">🧹</div>
+                <h3 className="text-2xl font-bold mb-2">{t('home.cleaning.title')}</h3>
+                <p className="text-green-100">{t('home.cleaning.desc')}</p>
+              </div>
+              <div className="p-6">
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <span className="text-2xl">🏠</span>
+                    <p className="text-sm mt-1">{t('services.homeCleaning.title')}</p>
+                  </div>
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <span className="text-2xl">🏢</span>
+                    <p className="text-sm mt-1">{t('services.officeCleaning.title')}</p>
+                  </div>
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <span className="text-2xl">🪟</span>
+                    <p className="text-sm mt-1">{t('services.windowCleaning.title')}</p>
+                  </div>
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <span className="text-2xl">🛋️</span>
+                    <p className="text-sm mt-1">{t('services.furnitureCleaning.title')}</p>
+                  </div>
+                </div>
+                <Link
+                  href="/services#cleaning"
+                  className="block w-full bg-green-600 text-white text-center py-3 rounded-lg font-medium hover:bg-green-700 transition"
+                >
+                  {t('home.cleaning.btn')} →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* All Services */}
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
             {t('home.services.title')}
@@ -79,23 +170,43 @@ function HomeContent() {
             {t('home.services.subtitle')}
           </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service) => (
+          {/* Porter Services */}
+          <h3 className="text-xl font-bold mb-6 text-blue-600">{t('services.porterTitle')}</h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {porterServices.map((service) => (
               <div
                 key={service.key}
-                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition hover:-translate-y-1"
+                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition hover:-translate-y-1 border-t-4 border-blue-500"
               >
                 <div className="text-5xl mb-4">{service.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{t(`services.${service.key}.title`)}</h3>
-                <p className="text-gray-600 mb-4">{t(`services.${service.key}.desc`)}</p>
-                <p className="text-green-600 font-bold text-lg">
-                  {service.price} {t('common.som')}
+                <h4 className="text-xl font-bold mb-2">{t(`services.${service.key}.title`)}</h4>
+                <p className="text-gray-600 mb-4 text-sm">{t(`services.${service.key}.desc`)}</p>
+                <p className="text-blue-600 font-bold text-lg">
+                  {t('common.from')} {service.price} {t('common.som')}
                 </p>
               </div>
             ))}
           </div>
 
-          <div className="text-center mt-8">
+          {/* Cleaning Services */}
+          <h3 className="text-xl font-bold mb-6 text-green-600">{t('services.cleaningTitle')}</h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+            {cleaningServices.map((service) => (
+              <div
+                key={service.key}
+                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition hover:-translate-y-1 border-t-4 border-green-500"
+              >
+                <div className="text-5xl mb-4">{service.icon}</div>
+                <h4 className="text-lg font-bold mb-2">{t(`services.${service.key}.title`)}</h4>
+                <p className="text-gray-600 mb-4 text-sm line-clamp-2">{t(`services.${service.key}.desc`)}</p>
+                <p className="text-green-600 font-bold text-lg">
+                  {t('common.from')} {service.price} {t('common.som')}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
             <Link
               href="/services"
               className="inline-block bg-green-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition"
@@ -106,41 +217,20 @@ function HomeContent() {
         </div>
       </section>
 
-      {/* Vehicles Section */}
-      <section className="py-16">
+      {/* Why Us */}
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-            {t('vehicles.title')}
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            {t('home.whyUs.title')}
           </h2>
-          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            {t('vehicles.subtitle')}
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {vehicles.map((vehicle, index) => (
-              <div
-                key={index}
-                className="bg-white border-2 border-gray-100 p-6 rounded-2xl hover:border-green-500 transition"
-              >
-                <div className="text-6xl mb-4 text-center">{vehicle.icon}</div>
-                <h3 className="text-2xl font-bold text-center mb-2">{vehicle.name}</h3>
-                <p className="text-green-600 font-bold text-xl text-center mb-4">
-                  {vehicle.price} {t('common.som')}/{t('common.hour')}
-                </p>
-                <div className="text-center text-gray-500">
-                  {t('vehicles.capacity')} {vehicle.capacity}
-                </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            {whyUs.map((item) => (
+              <div key={item.key} className="text-center">
+                <div className="text-5xl mb-4">{item.icon}</div>
+                <h3 className="text-xl font-bold mb-2">{t(`home.whyUs.${item.key}`)}</h3>
+                <p className="text-gray-600">{t(`home.whyUs.${item.key}Desc`)}</p>
               </div>
             ))}
-          </div>
-
-          <div className="text-center mt-8">
-            <Link
-              href="/vehicles"
-              className="inline-block bg-green-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition"
-            >
-              {t('nav.vehicles')} →
-            </Link>
           </div>
         </div>
       </section>
@@ -149,7 +239,7 @@ function HomeContent() {
       <section className="py-16 bg-green-600 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            {t('home.hero.cta')}!
+            {t('contact.orderNow')}
           </h2>
           <p className="text-xl mb-8 text-green-100 max-w-2xl mx-auto">
             {t('contact.orderNowDesc')}
@@ -174,7 +264,8 @@ function HomeContent() {
       {/* Footer */}
       <footer className="py-8 bg-gray-900 text-gray-400 text-center">
         <div className="container mx-auto px-4">
-          © 2024 Porter Taxi {t('common.bishkek')}
+          <p className="text-2xl mb-2">🏠 Жардамчы</p>
+          <p>© 2024 Жардамчы - {t('common.bishkek')}</p>
         </div>
       </footer>
     </main>

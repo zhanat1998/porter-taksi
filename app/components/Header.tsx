@@ -37,9 +37,9 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl">🚚</span>
+            <span className="text-2xl">🏠</span>
             <div>
-              <span className="text-xl font-bold text-green-600">Porter Taxi</span>
+              <span className="text-xl font-bold text-green-600">Жардамчы</span>
               <span className="hidden sm:inline text-sm text-gray-500 ml-2">Бишкек</span>
             </div>
           </Link>
