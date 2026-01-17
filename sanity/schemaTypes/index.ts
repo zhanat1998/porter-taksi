@@ -6,6 +6,7 @@ import { testimonial } from './documents/testimonial'
 import { faq } from './documents/faq'
 import { page } from './documents/page'
 import { siteSettings } from './documents/siteSettings'
+import { video } from './documents/video'
 
 // Objects
 import { seo } from './objects/seo'
@@ -31,6 +32,7 @@ export const schemaTypes = [
   faq,
   page,
   siteSettings,
+  video,
 
   // Objects
   seo,

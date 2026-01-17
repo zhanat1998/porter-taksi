@@ -130,3 +130,19 @@ export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] {
   serviceAreas,
   defaultSeo
 }`
+
+// Видео
+export const VIDEO_BY_CATEGORY_QUERY = `*[_type == "video" && category == $category && isActive == true][0] {
+  _id,
+  title,
+  "videoUrl": videoFile.asset->url,
+  "posterUrl": poster.asset->url
+}`
+
+// Бардык видеолор категория боюнча
+export const VIDEOS_BY_CATEGORY_QUERY = `*[_type == "video" && category == $category && isActive == true] | order(_createdAt asc) {
+  _id,
+  title,
+  "videoUrl": videoFile.asset->url,
+  "posterUrl": poster.asset->url
+}`

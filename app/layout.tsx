@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Porter Taxi - Бишкек",
-  description: "Мусор чыгаруу жана жүк ташуу кызматы",
+  title: "Жардамчы - Бишкек",
+  description: "Портер жана клининг кызматтары. Мусор чыгаруу, жүк ташуу, үй тазалоо Бишкекте.",
 };
 
 export default function RootLayout({

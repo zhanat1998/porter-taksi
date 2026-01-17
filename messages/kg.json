@@ -29,6 +29,10 @@
       "cta": "Азыр чалуу",
       "ctaSecondary": "WhatsApp жазуу"
     },
+    "videos": {
+      "garbage": "Мусор чыгаруу",
+      "cleaning": "Клининг"
+    },
     "categories": {
       "title": "Биздин кызмат багыттары",
       "subtitle": "Сизге кайсы кызмат керек?"

@@ -101,7 +101,7 @@ export const siteSettings = defineType({
       of: [{ type: 'string' }],
       description: 'Бишкек районлору',
     }),
-    defineField({
+        defineField({
       name: 'defaultSeo',
       title: 'Демейки SEO',
       type: 'seo',

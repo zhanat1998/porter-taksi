@@ -29,6 +29,10 @@
       "cta": "Позвонить сейчас",
       "ctaSecondary": "Написать в WhatsApp"
     },
+    "videos": {
+      "garbage": "Вывоз мусора",
+      "cleaning": "Клининг"
+    },
     "categories": {
       "title": "Наши направления услуг",
       "subtitle": "Какая услуга вам нужна?"

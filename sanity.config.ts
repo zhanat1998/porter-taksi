@@ -5,10 +5,10 @@ import { schemaTypes } from './sanity/schemaTypes'
 
 export default defineConfig({
   name: 'default',
-  title: 'Porter Taxi - Бишкек',
+  title: 'Жардамчы - Бишкек',
 
-  projectId: '74d2fdc4',
-  dataset: 'production',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'try9drhk',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
 
   basePath: '/studio',
 

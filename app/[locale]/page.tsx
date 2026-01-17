@@ -1,19 +1,34 @@
 import { useTranslations } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import Link from 'next/link'
+import { client } from '@/app/sanity/lib/client'
+import { VIDEOS_BY_CATEGORY_QUERY } from '@/app/sanity/lib/queries'
 
 type Props = {
   params: Promise<{ locale: string }>
+}
+
+async function getHomeVideos() {
+  return client.fetch(VIDEOS_BY_CATEGORY_QUERY, { category: 'home' })
 }
 
 export default async function Home({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
 
-  return <HomeContent />
+  const videos = await getHomeVideos()
+
+  return <HomeContent videos={videos} />
 }
 
-function HomeContent() {
+type VideoData = {
+  _id: string
+  title: string
+  videoUrl: string
+  posterUrl?: string
+}
+
+function HomeContent({ videos }: { videos: VideoData[] }) {
   const t = useTranslations()
 
   const porterServices = [
@@ -42,35 +57,108 @@ function HomeContent() {
     <main className="min-h-screen">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-green-600 to-green-800 text-white">
-        <div className="container mx-auto px-4 py-16 md:py-24">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              {t('home.hero.title')}
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-green-100">
-              {t('home.hero.subtitle')}
-            </p>
+        <div className="container mx-auto px-4 pt-[10px] pb-16 md:py-24">
+          {/* Мобилка - видеолор үстүндө */}
+          {videos && videos.length > 0 && (
+            <div className="lg:hidden mb-8">
+              <div className="flex gap-3 justify-center">
+                {videos.slice(0, 2).map((video, index) => (
+                  <div key={video._id} className="flex flex-col items-center">
+                    <span className="text-sm font-semibold mb-2 text-green-100">
+                      {index === 0 ? t('home.videos.garbage') : t('home.videos.cleaning')}
+                    </span>
+                    <div className="aspect-video h-[120px] rounded-xl overflow-hidden shadow-xl bg-green-700/30">
+                      {video.videoUrl ? (
+                        <video
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          poster={video.posterUrl}
+                          className="w-full h-full object-cover"
+                        >
+                          <source src={video.videoUrl} type="video/mp4" />
+                        </video>
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <span className="text-4xl">🚚</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-              <a
-                href="tel:+996555123456"
-                className="bg-white text-green-700 px-8 py-4 rounded-lg text-xl font-bold hover:bg-green-50 transition text-center"
-              >
-                📞 +996 555 123 456
-              </a>
-              <a
-                href="https://wa.me/996555123456"
-                className="bg-green-500 text-white px-8 py-4 rounded-lg text-xl font-bold hover:bg-green-400 transition text-center border-2 border-green-400"
-              >
-                💬 {t('common.whatsapp')}
-              </a>
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            {/* Сол жак - Текст */}
+            <div className="text-center lg:text-left">
+              <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6">
+                {t('home.hero.title')}
+              </h1>
+              <p className="text-xl md:text-2xl mb-8 text-green-100">
+                {t('home.hero.subtitle')}
+              </p>
+
+              <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mb-8">
+                <a
+                  href="tel:+996555123456"
+                  className="bg-white text-green-700 px-8 py-4 rounded-lg text-xl font-bold hover:bg-green-50 transition text-center"
+                >
+                  📞 +996 555 123 456
+                </a>
+                <a
+                  href="https://wa.me/996555123456"
+                  className="bg-green-500 text-white px-8 py-4 rounded-lg text-xl font-bold hover:bg-green-400 transition text-center border-2 border-green-400"
+                >
+                  💬 {t('common.whatsapp')}
+                </a>
+              </div>
+
+              <div className="flex flex-wrap justify-center lg:justify-start gap-3 text-sm">
+                <span className="bg-green-700/50 px-4 py-2 rounded-full">⏰ 24/7</span>
+                <span className="bg-green-700/50 px-4 py-2 rounded-full">⚡ {t('home.whyUs.fast')}</span>
+                <span className="bg-green-700/50 px-4 py-2 rounded-full">💰 {t('home.whyUs.affordable')}</span>
+                <span className="bg-green-700/50 px-4 py-2 rounded-full">🏆 {t('home.whyUs.quality')}</span>
+              </div>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-3 text-sm">
-              <span className="bg-green-700/50 px-4 py-2 rounded-full">⏰ 24/7</span>
-              <span className="bg-green-700/50 px-4 py-2 rounded-full">⚡ {t('home.whyUs.fast')}</span>
-              <span className="bg-green-700/50 px-4 py-2 rounded-full">💰 {t('home.whyUs.affordable')}</span>
-              <span className="bg-green-700/50 px-4 py-2 rounded-full">🏆 {t('home.whyUs.quality')}</span>
+            {/* Оң жак - Эки видео (десктоп) */}
+            <div className="hidden lg:block">
+              <div className="flex gap-4">
+                {videos && videos.length > 0 ? (
+                  videos.slice(0, 2).map((video, index) => (
+                    <div key={video._id} className="flex-1 flex flex-col items-center">
+                      <span className="text-base font-semibold mb-2 text-green-100">
+                        {index === 0 ? t('home.videos.garbage') : t('home.videos.cleaning')}
+                      </span>
+                      <div className="w-full aspect-video max-h-[180px] rounded-xl overflow-hidden shadow-xl bg-green-700/30">
+                        {video.videoUrl ? (
+                          <video
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            poster={video.posterUrl}
+                            className="w-full h-full object-cover"
+                          >
+                            <source src={video.videoUrl} type="video/mp4" />
+                          </video>
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <span className="text-5xl">🚚</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="flex-1 aspect-video max-h-[200px] rounded-xl overflow-hidden shadow-xl bg-green-700/30 flex items-center justify-center">
+                    <span className="text-7xl">🚚</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
