@@ -10,6 +10,7 @@ const services = [
   { name: 'Демонтаж', href: '/services/demolition', icon: '🔨' },
   { name: 'Няня', href: '/services/nanny', icon: '👶' },
   { name: 'Свадьба', href: '/services/marry-me', icon: '💍' },
+  { name: 'Повар', href: '/services/cook', icon: '👨‍🍳' },
 ]
 
 export default function ServicesBar() {

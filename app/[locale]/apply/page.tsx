@@ -26,6 +26,7 @@ const serviceTypes = [
   { label: 'Няня', value: 'nanny' },
   { label: 'Грузчики', value: 'loaders' },
   { label: 'Демонтаж', value: 'demolition' },
+  { label: 'Повар', value: 'cook' },
 ]
 
 export default function ApplyPage() {

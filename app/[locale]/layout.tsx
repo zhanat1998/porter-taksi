@@ -3,7 +3,6 @@ import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { locales } from '@/i18n/config'
 import Header from '../components/Header'
-import HeroCTA from '../components/HeroCTA'
 import ServicesBar from '../components/ServicesBar'
 import Footer from '../components/Footer'
 
@@ -29,7 +28,6 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <NextIntlClientProvider messages={messages}>
       <Header />
-      <HeroCTA />
       <ServicesBar />
       {children}
       <Footer />
