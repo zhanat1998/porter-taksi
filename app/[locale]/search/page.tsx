@@ -412,7 +412,6 @@ function SearchContent() {
   const searchParams = useSearchParams()
   const [activeTab, setActiveTab] = useState<'worker' | 'employer'>('worker')
   const [selectedCategory, setSelectedCategory] = useState('cargo')
-  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null)
   const [vacancies, setVacancies] = useState<Vacancy[]>([])
   const [workers, setWorkers] = useState<Worker[]>([])
   const [selectedItem, setSelectedItem] = useState<Vacancy | Worker | null>(null)
@@ -426,11 +425,6 @@ function SearchContent() {
     else if (tab === 'worker') setActiveTab('worker')
     if (category && category !== 'all') setSelectedCategory(category)
   }, [searchParams])
-
-  // Категория өзгөргөндө субкатегорияны тазалоо
-  useEffect(() => {
-    setSelectedSubcategory(null)
-  }, [selectedCategory])
 
   useEffect(() => {
     setVacancies(generateVacancies(selectedCategory, 50))
@@ -447,66 +441,6 @@ function SearchContent() {
     { id: 'cook', name: 'Повар', icon: '👨‍🍳' },
     { id: 'marry-me', name: 'Той', icon: '💒' },
   ]
-
-  // Субкатегориялар
-  const subcategories: Record<string, { id: string; name: string }[]> = {
-    'cargo': [
-      { id: 'cargo-city', name: 'Шаар ичинде' },
-      { id: 'cargo-region', name: 'Облустар аралык' },
-      { id: 'cargo-fura', name: 'Фура' },
-      { id: 'cargo-gazel', name: 'Газель' },
-      { id: 'cargo-porter', name: 'Портер' },
-    ],
-    'loaders': [
-      { id: 'loaders-move', name: 'Көчүрүү' },
-      { id: 'loaders-warehouse', name: 'Склад' },
-      { id: 'loaders-furniture', name: 'Мебел' },
-      { id: 'loaders-construction', name: 'Курулуш' },
-    ],
-    'garbage': [
-      { id: 'garbage-construction', name: 'Курулуш таштандысы' },
-      { id: 'garbage-home', name: 'Үй таштандысы' },
-      { id: 'garbage-garden', name: 'Бак-дарак' },
-      { id: 'garbage-furniture', name: 'Эски мебел' },
-    ],
-    'cleaning': [
-      { id: 'cleaning-general', name: 'Генералдык' },
-      { id: 'cleaning-daily', name: 'Күнүмдүк' },
-      { id: 'cleaning-office', name: 'Офис' },
-      { id: 'cleaning-window', name: 'Терезе' },
-      { id: 'cleaning-after-repair', name: 'Ремонттон кийин' },
-    ],
-    'demolition': [
-      { id: 'demolition-wall', name: 'Дубал бузуу' },
-      { id: 'demolition-floor', name: 'Пол бузуу' },
-      { id: 'demolition-bathroom', name: 'Санузел' },
-      { id: 'demolition-full', name: 'Толук демонтаж' },
-    ],
-    'nanny': [
-      { id: 'nanny-hourly', name: '1 саатка' },
-      { id: 'nanny-halfday', name: 'Жарым күн' },
-      { id: 'nanny-fullday', name: 'Толук күн' },
-      { id: 'nanny-night', name: 'Түнкү' },
-      { id: 'nanny-permanent', name: 'Туруктуу' },
-      { id: 'nanny-governess', name: 'Гувернантка' },
-    ],
-    'cook': [
-      { id: 'cook-wedding', name: 'Той повары' },
-      { id: 'cook-home', name: 'Үйгө повар' },
-      { id: 'cook-confectioner', name: 'Кондитер' },
-      { id: 'cook-shashlik', name: 'Шашлык' },
-      { id: 'cook-national', name: 'Улуттук тамак' },
-      { id: 'cook-diet', name: 'Диеталык' },
-    ],
-    'marry-me': [
-      { id: 'marry-organizer', name: 'Той уюштуруучу' },
-      { id: 'marry-tamada', name: 'Тамада' },
-      { id: 'marry-photo', name: 'Фотограф' },
-      { id: 'marry-video', name: 'Видеограф' },
-      { id: 'marry-decor', name: 'Декоратор' },
-      { id: 'marry-dj', name: 'DJ/Музыкант' },
-    ],
-  }
 
   const currentCategoryName = categories.find(c => c.id === selectedCategory)?.name || 'Баардыгы'
 
@@ -567,34 +501,6 @@ function SearchContent() {
             ))}
           </div>
 
-          {/* Subcategories - Fixed, no scroll */}
-          {subcategories[selectedCategory] && (
-            <div className="flex flex-wrap gap-2 pt-3 mt-2 border-t border-gray-100">
-              <button
-                onClick={() => setSelectedSubcategory(null)}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium transition ${
-                  selectedSubcategory === null
-                    ? 'bg-green-100 text-green-700 ring-1 ring-green-300'
-                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
-                }`}
-              >
-                Баардыгы
-              </button>
-              {subcategories[selectedCategory].map((sub) => (
-                <button
-                  key={sub.id}
-                  onClick={() => setSelectedSubcategory(sub.id)}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition ${
-                    selectedSubcategory === sub.id
-                      ? 'bg-green-100 text-green-700 ring-1 ring-green-300'
-                      : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
-                  }`}
-                >
-                  {sub.name}
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       </section>
 
